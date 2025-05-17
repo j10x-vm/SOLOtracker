@@ -1,0 +1,32 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>System Access</title>
+  <link rel="stylesheet" href="style.css" />
+
+</head>
+<body>
+  <div class="startup-container" id="startup">
+    <h1>⟪ SOLO SYSTEM v2 ⟫</h1>
+    <p>Enter your name, Hunter</p>
+    <input type="text" id="username" placeholder="Your name..."><br>
+    <button onclick="start()">Begin</button>
+  </div>
+
+  <script>
+    function start() {
+      const name = document.getElementById("username").value.trim();
+      if (!name) return alert("Enter your name, hunter.");
+
+      localStorage.setItem("hunterName", name);
+
+      const startup = document.getElementById("startup");
+      startup.classList.add("fade-out");
+
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
