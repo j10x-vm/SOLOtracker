@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Solo Leveling Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+
+</head>
+<body>
+  <button class="toggle-btn" onclick="toggleActiveWindow()">📋 Active Tasks</button>
+
+  <div class="active-window" id="activeTasks">
+    <h3>Active Tasks</h3>
+    <ul id="active-task-list"></ul>
+  </div>
+
+  <div class="character-window">
+    <h1><span id="hunterName">Hunter</span> (Level <span id="level">1</span>)</h1>
+    <div class="xp-bar"><div id="xp-fill"></div></div>
+    <p>XP: <span id="xp">0</span>/<span id="xp-max">100</span></p>
+    <canvas id="statChart" width="300" height="300"></canvas>
+  </div>
+
+  <div class="task-section">
+    <h2>Quests</h2>
+    <ul id="task-list"></ul>
+  
+    <input type="text" id="new-task" placeholder="Enter a quest..."><br>
+    <input type="number" id="xp-reward" placeholder="XP reward" value="20"><br>
+    <select id="stat-select">
+      <option value="">No Stat</option>
+      <option value="Strength">Strength</option>
+      <option value="Agility">Agility</option>
+      <option value="Intelligence">Intelligence</option>
+      <option value="Endurance">Endurance</option>
+      <option value="Perception">Perception</option>
+    </select><br>
+  
+    <button onclick="addTask()">Add</button>
+  </div>
+
+  <nav>
+    <a href="index.html">🏠 Tracker</a> |
+    <a href="character.html">🧍 Character</a> |
+    <a href="skills-radial.html">Skill Tree</a>
+  </nav>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+  <script>
+    function toggleActiveWindow() {
+      const win = document.getElementById("activeTasks");
+      win.style.display = win.style.display === "none" ? "block" : "none";
+    }
+  </script>
+</body>
+</html>
