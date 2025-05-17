@@ -178,7 +178,7 @@ button:hover {
 }
 
 /* ============================ */
-/*     RADIAL SKILL TREE       */
+/*       RADIAL SKILL TREE      */
 /* ============================ */
 
 #canvas {
@@ -205,20 +205,18 @@ button:hover {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 120px;
-  height: 120px;
-  background: var(--accent);
-  border-radius: 50%;
+  width: 130px;
+  height: 130px;
   transform: translate(-50%, -50%);
+  background: var(--accent);
+  color: black;
+  border-radius: 50%;
+  font-weight: bold;
+  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 0 15px var(--accent);
-  font-weight: bold;
-  text-align: center;
-  padding: 10px;
-  font-size: 14px;
-  color: black;
   z-index: 3;
 }
 
@@ -226,20 +224,56 @@ button:hover {
   position: absolute;
   width: 70px;
   height: 70px;
-  background-color: #1a1a1d;
-  border: 3px solid #555;
+  background: #1a1a1d;
+  border: 2px solid var(--accent);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
   font-size: 28px;
-  transition: 0.2s;
+  cursor: pointer;
+  box-shadow: 0 0 10px var(--accent);
+  transition: transform 0.2s;
+}
+
+.skill-node:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px var(--highlight);
 }
 
 .skill-node.unlocked {
-  border-color: var(--accent);
-  box-shadow: 0 0 8px var(--accent);
+  border-color: var(--highlight);
+  box-shadow: 0 0 12px var(--highlight);
+}
+
+.skill-popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #111;
+  border: 2px solid var(--accent);
+  padding: 20px;
+  border-radius: 10px;
+  display: none;
+  z-index: 10;
+  color: white;
+  text-align: center;
+}
+
+.skill-popup h2 {
+  color: var(--accent);
+  margin: 0 0 10px;
+}
+
+.skill-popup button {
+  background: var(--accent);
+  color: black;
+  font-weight: bold;
+  padding: 8px 12px;
+  margin-top: 10px;
+  border: none;
+  cursor: pointer;
 }
 
 .connector {
@@ -247,22 +281,11 @@ button:hover {
   stroke-width: 2;
 }
 
-.skill-popup {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 300px;
-  background: #111;
-  border: 2px solid var(--accent);
-  padding: 20px;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-  display: none;
-}
-
-.skill-popup h2 {
-  margin-top: 0;
+nav a {
   color: var(--accent);
+  text-decoration: none;
+  font-weight: bold;
+  margin: 0 8px;
 }
 
 /* ============================ */

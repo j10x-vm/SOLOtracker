@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Radial Skill Tree with Tasks</title>
-
+  <title>Skill Web</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <svg id="lines"></svg>
@@ -14,15 +14,15 @@
   <div class="skill-popup" id="popup">
     <h2 id="popup-title"></h2>
     <p id="popup-desc"></p>
-    <div id="timer-display" style="margin:10px 0;"></div>
+    <div id="timer-display"></div>
     <button id="start-btn" onclick="startTask()">Start Task</button>
     <button onclick="closePopup()">Cancel</button>
   </div>
 
-  <div id="controls">
-    <button onclick="saveProgress()">Save</button>
-    <button onclick="resetProgress()">Reset</button>
-  </div>
+  <nav style="position: fixed; bottom: 10px; width: 100%; text-align: center; z-index: 999;">
+    <a href="radar.html" style="color: var(--accent); text-decoration: none; font-weight: bold;">🏠 Tracker</a> |
+    <a href="character.html" style="color: var(--accent); text-decoration: none; font-weight: bold;">🧍 Character</a>
+  </nav>
 
   <script>
     const canvas = document.getElementById("canvas");
@@ -36,7 +36,6 @@
     const completed = new Set(JSON.parse(localStorage.getItem("completedSkills")) || []);
     let currentSkill = null;
     let currentStat = null;
-    let taskStartTime = null;
     let taskDuration = 0;
 
     const branches = [
@@ -58,8 +57,8 @@
       currentSkill = skillId;
       currentStat = stat;
       taskDuration = time;
-      document.getElementById("popup-title").textContent = `${title}`;
-      document.getElementById("popup-desc").textContent = `Complete this task to gain +1 ${stat}${time > 0 ? ` (Takes ${time}s)` : ''}`;
+      document.getElementById("popup-title").textContent = title;
+      document.getElementById("popup-desc").innerHTML = `Effect: +1 ${stat}<br>Task: ${time > 0 ? time + 's timer' : 'Instant unlock'}`;
       document.getElementById("timer-display").textContent = "";
       document.getElementById("start-btn").disabled = false;
       document.getElementById("popup").style.display = "block";
@@ -68,12 +67,11 @@
     function startTask() {
       document.getElementById("start-btn").disabled = true;
       if (taskDuration > 0) {
-        taskStartTime = Date.now();
+        let start = Date.now();
         const interval = setInterval(() => {
-          const elapsed = Math.floor((Date.now() - taskStartTime) / 1000);
-          const remaining = taskDuration - elapsed;
-          document.getElementById("timer-display").textContent = `Time Remaining: ${remaining}s`;
-          if (remaining <= 0) {
+          let elapsed = Math.floor((Date.now() - start) / 1000);
+          document.getElementById("timer-display").textContent = `Time Remaining: ${taskDuration - elapsed}s`;
+          if (elapsed >= taskDuration) {
             clearInterval(interval);
             completeSkill();
           }
@@ -89,7 +87,8 @@
         stats[currentStat]++;
         stats.LVL++;
         document.getElementById(`skill-${currentSkill}`).classList.add("unlocked");
-        saveProgress();
+        localStorage.setItem("stats", JSON.stringify(stats));
+        localStorage.setItem("completedSkills", JSON.stringify([...completed]));
         updateCore();
       }
       closePopup();
@@ -97,19 +96,6 @@
 
     function closePopup() {
       document.getElementById("popup").style.display = "none";
-    }
-
-    function saveProgress() {
-      localStorage.setItem("stats", JSON.stringify(stats));
-      localStorage.setItem("completedSkills", JSON.stringify([...completed]));
-      alert("Progress saved!");
-    }
-
-    function resetProgress() {
-      if (confirm("Reset all progress?")) {
-        localStorage.clear();
-        location.reload();
-      }
     }
 
     function createSkillNode(x, y, icon, id, stat, time) {
@@ -154,7 +140,6 @@
       });
     });
 
-    // drag movement
     document.addEventListener("mousedown", (e) => {
       dragging = true;
       startX = e.clientX;
@@ -173,8 +158,3 @@
   </script>
 </body>
 </html>
-
-<nav>
-  <a href="radar.html">🏠 Tracker</a> |
-  <a href="character.html">🧍 Character</a> |
-</nav>
